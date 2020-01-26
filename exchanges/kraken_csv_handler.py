@@ -1,6 +1,6 @@
 import csv
-from Kryptobesteuerung.csv_formatter import CsvFormatter
-from Kryptobesteuerung.api_call import get_price_of_currency
+from Kryptosteuertool.csv_formatter import CsvFormatter
+from Kryptosteuertool.api_call import get_price_of_currency
 
 
 class KrakenCsvHandler(CsvFormatter):

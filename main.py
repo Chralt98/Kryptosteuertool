@@ -1,6 +1,6 @@
 from exchanges.kraken_csv_handler import KrakenCsvHandler
 from exchanges.binance_csv_handler import BinanceCsvHandler
-from Kryptobesteuerung.secret import account_name_binance, account_name_kraken
+from Kryptosteuertool.secret import account_name_binance, account_name_kraken
 
 path = '/home/chralt/Krypto/'
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 from datetime import datetime
 import requests
-from Kryptobesteuerung.secret import api_key
+from Kryptosteuertool.secret import api_key
 
 
 def get_price_of_currency(date, src_currency, dst_currency, exchange_name):
