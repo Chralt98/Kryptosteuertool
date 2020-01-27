@@ -40,6 +40,15 @@ class CsvFormatter:
             self.build_header(self.crypto_exchange, self.account_name, asset, self.shortcut_to_name[asset],
                               self.shortcut_to_itin[asset])
             for t in self.transactions[asset]:
+                date = t[self.tx_mask['date']]
+                t[self.tx_mask['date']] = self.format_german_date(date)
+                t[self.tx_mask['input_amount']] = '\'  ' + t[self.tx_mask['input_amount']]
+                t[self.tx_mask['output_amount']] = '\'  ' + t[self.tx_mask['output_amount']]
+                t[self.tx_mask['fee']] = '\'  ' + t[self.tx_mask['fee']]
+                t[self.tx_mask['acquisition_cost']] = '\'  ' + t[self.tx_mask['acquisition_cost']]
+                t[self.tx_mask['selling_price']] = '\'  ' + t[self.tx_mask['selling_price']]
+                t[self.tx_mask['capital_gain']] = '\'  ' + t[self.tx_mask['capital_gain']]
+                t[self.tx_mask['tax_relevant_gain_loss']] = '\'  ' + t[self.tx_mask['tax_relevant_gain_loss']]
                 self.output.append(t)
             self.output.append(['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''])
 
@@ -52,7 +61,7 @@ class CsvFormatter:
              itin])
         self.output.append(['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''])
         self.output.append(
-            ['ID', 'Datum', 'Art', '', 'Eingang', '', '', 'Ausgang', '', '', 'Gebühr\nin EUR',
+            ['ID', 'Datum (UTC)', 'Art', '', 'Eingang', '', '', 'Ausgang', '', '', 'Gebühr\nin EUR',
              'Anschaffungs-\nkosten\nin EUR',
              'Veräußerungs-\npreis\nin EUR', 'Veräußerungs-\ngewinn\nin EUR', 'Haltedauer\nin Tagen',
              'Steuerrelevanter\nKursgewinn-/verlust'])
@@ -76,6 +85,29 @@ class CsvFormatter:
             except:
                 self.transactions[str(crypto_asset)] = [transaction]
         return transaction
+
+    @staticmethod
+    def format_german_date(date):
+        # german format
+        date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+        day = str(date.day)
+        month = str(date.month)
+        year = str(date.year)
+        hour = str(date.hour)
+        minute = str(date.minute)
+        second = str(date.second)
+        if len(day) == 1:
+            day = '0' + day
+        if len(month) == 1:
+            month = '0' + month
+        if len(hour) == 1:
+            hour = '0' + hour
+        if len(minute) == 1:
+            minute = '0' + minute
+        if len(second) == 1:
+            second = '0' + second
+        date = str(day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + second)
+        return date
 
     def format_and_append_csv_line(self, transaction_id='', date='', output_typ='', input_amount='',
                                    input_asset_name='', output_amount='',
@@ -104,12 +136,26 @@ class CsvFormatter:
         else:
             tax_relevant_gain_loss = round(tax_relevant_gain_loss, 2)
 
+        if type(input_amount) is float:
+            input_amount = '{0:.8f}'.format(float(input_amount))
+        if type(output_amount) is float:
+            output_amount = '{0:.8f}'.format(float(output_amount))
         input_amount = str(input_amount).replace('.', ',')
         output_amount = str(output_amount).replace('.', ',')
+        if type(fee) is float:
+            fee = '{0:.2f}'.format(float(fee))
         fee = str(fee).replace('.', ',')
+        if type(acquisition_cost) is float:
+            acquisition_cost = '{0:.2f}'.format(float(acquisition_cost))
         acquisition_cost = str(acquisition_cost).replace('.', ',')
+        if type(selling_price) is float:
+            selling_price = '{0:.2f}'.format(float(selling_price))
         selling_price = str(selling_price).replace('.', ',')
+        if type(capital_gain) is float:
+            capital_gain = '{0:.2f}'.format(float(capital_gain))
         capital_gain = str(capital_gain).replace('.', ',')
+        if type(tax_relevant_gain_loss) is float:
+            tax_relevant_gain_loss = '{0:.2f}'.format(float(tax_relevant_gain_loss))
         tax_relevant_gain_loss = str(tax_relevant_gain_loss).replace('.', ',')
 
         return self.append_csv_line(transaction_id, date, output_typ, input_amount, input_asset_name, output_amount,
