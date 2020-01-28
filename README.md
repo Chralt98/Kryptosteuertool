@@ -1,4 +1,4 @@
-# Einzeltransaktionsaufstellung für den Handel mit Kryptowährungen (german tax trading single transaction lineup for crypto currencies) 
+# Binance Einzeltransaktionsaufstellung für den Handel mit Kryptowährungen (german tax trading single transaction lineup for crypto currencies) 
 ### kostenloses Python FIFO (first in first out) Tool für die Transaktionsaufzeichnung von Kryptoeinheiten 
 
 ##### WICHTIG: Bitte überprüfen Sie die Werte, der Autor übernimmt keine Haftung! 
