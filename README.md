@@ -30,7 +30,7 @@ structure of binance withdrawal and deposit:
 
 ![Alt text](examples/binance_withdrawal_deposit.png?raw=true "binance withdrawals and deposits")
 
-**Kraken:**\
+**Kraken (experimental, currently works only with deposit euro, withdrawal and buy with euro):**\
 Go to https://www.kraken.com/u/history/export and select export type **Ledgers**!
 
 structure of kraken ledgers:
